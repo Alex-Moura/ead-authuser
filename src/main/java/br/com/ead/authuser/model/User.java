@@ -3,15 +3,22 @@ package br.com.ead.authuser.model;
 import br.com.ead.authuser.enums.UserRole;
 import br.com.ead.authuser.enums.UserStatus;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Setter(AccessLevel.NONE)
     private UUID id;
 
     @Column(name = "user_name",length = 50, nullable = false, unique = true)
