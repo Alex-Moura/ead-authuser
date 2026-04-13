@@ -2,17 +2,53 @@ package br.com.ead.authuser.service.impl;
 
 import br.com.ead.authuser.dtos.UserRequestDTO;
 import br.com.ead.authuser.dtos.UserResponseDTO;
+import br.com.ead.authuser.dtos.UserUpdateDTO;
+import br.com.ead.authuser.exceptions.custom.ResourceNotFoundException;
+import br.com.ead.authuser.mapper.UserMapper;
+import br.com.ead.authuser.model.User;
+import br.com.ead.authuser.repository.UserRepository;
 import br.com.ead.authuser.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
     @Override
-    public UserResponseDTO signupUser(UserRequestDTO dto) {
-        return null;
+    public UserResponseDTO findById(UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
+        return userMapper.toDTO(user);
     }
+
+    @Override
+    public List<UserResponseDTO> findAll() {
+        List<User> users = userRepository.findAll();
+        return userMapper.toDTOList(users);
+    }
+
+    @Override
+    public UserResponseDTO update(UUID id, UserUpdateDTO userUpdateDTO) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
+        userMapper.updateUserFromDto(userUpdateDTO, user);
+        return userMapper.toDTO(userRepository.save(user));
+    }
+
+    @Override
+    public void delete(UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
+        userRepository.delete(user);
+    }
+
+
 }
 

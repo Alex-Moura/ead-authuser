@@ -51,9 +51,11 @@ public class User {
     private String imagemUrl;
 
     @Column(name = "created_at", nullable = false)
+    @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @Setter(AccessLevel.NONE)
     private LocalDateTime updatedAt;
 
     @PrePersist
