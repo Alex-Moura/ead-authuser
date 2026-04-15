@@ -2,6 +2,7 @@ package br.com.ead.authuser.controller;
 
 import br.com.ead.authuser.dtos.UserResponseDTO;
 import br.com.ead.authuser.dtos.UserUpdateDTO;
+import br.com.ead.authuser.especification.SpecificationTemplate;
 import br.com.ead.authuser.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,10 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Page<UserResponseDTO>> findAll(
+            SpecificationTemplate.UserSpec spec,
             @PageableDefault(page = 0, size = 10, sort = "id",
                             direction = Sort.Direction.ASC) Pageable pageable){
-        Page<UserResponseDTO> userResponseDTOPageage = userService.findAll(pageable);
+        Page<UserResponseDTO> userResponseDTOPageage = userService.findAll(spec, pageable);
         return ResponseEntity.ok(userResponseDTOPageage);
     }
 

@@ -2,6 +2,7 @@ package br.com.ead.authuser.service.impl;
 
 import br.com.ead.authuser.dtos.UserResponseDTO;
 import br.com.ead.authuser.dtos.UserUpdateDTO;
+import br.com.ead.authuser.especification.SpecificationTemplate;
 import br.com.ead.authuser.exceptions.custom.ResourceNotFoundException;
 import br.com.ead.authuser.mapper.UserMapper;
 import br.com.ead.authuser.model.User;
@@ -10,6 +11,7 @@ import br.com.ead.authuser.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -44,8 +46,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserResponseDTO> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable)
+    public Page<UserResponseDTO> findAll(Specification<User> spec, Pageable pageable) {
+        return userRepository.findAll(spec, pageable)
                 .map(userMapper::toDTO);
     }
 
