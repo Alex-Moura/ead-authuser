@@ -2,6 +2,7 @@ package br.com.ead.authuser.service.impl;
 
 import br.com.ead.authuser.dtos.UserResponseDTO;
 import br.com.ead.authuser.dtos.UserUpdateDTO;
+import br.com.ead.authuser.exceptions.ErrorMessages;
 import br.com.ead.authuser.exceptions.custom.ResourceNotFoundException;
 import br.com.ead.authuser.mapper.UserMapper;
 import br.com.ead.authuser.model.User;
@@ -25,14 +26,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO findById(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
         return userMapper.toDTO(user);
     }
 
     @Override
     public UserResponseDTO update(UUID id, UserUpdateDTO userUpdateDTO) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
         userMapper.updateUserFromDto(userUpdateDTO, user);
         return userMapper.toDTO(userRepository.save(user));
     }
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
         userRepository.delete(user);
     }
 
