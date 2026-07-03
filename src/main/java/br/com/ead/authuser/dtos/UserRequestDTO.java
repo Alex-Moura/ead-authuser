@@ -1,8 +1,9 @@
 package br.com.ead.authuser.dtos;
 
-import br.com.ead.authuser.enums.UserRole;
-import br.com.ead.authuser.enums.UserStatus;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record UserRequestDTO(

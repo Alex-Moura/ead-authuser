@@ -2,7 +2,6 @@ package br.com.ead.authuser.dtos;
 
 import br.com.ead.authuser.enums.UserRole;
 import br.com.ead.authuser.enums.UserStatus;
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

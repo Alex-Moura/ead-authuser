@@ -3,7 +3,6 @@ package br.com.ead.authuser.service;
 
 import br.com.ead.authuser.dtos.UserResponseDTO;
 import br.com.ead.authuser.dtos.UserUpdateDTO;
-import br.com.ead.authuser.especification.SpecificationTemplate;
 import br.com.ead.authuser.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

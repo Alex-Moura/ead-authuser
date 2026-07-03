@@ -2,7 +2,6 @@ package br.com.ead.authuser.service.impl;
 
 import br.com.ead.authuser.dtos.UserResponseDTO;
 import br.com.ead.authuser.dtos.UserUpdateDTO;
-import br.com.ead.authuser.especification.SpecificationTemplate;
 import br.com.ead.authuser.exceptions.custom.ResourceNotFoundException;
 import br.com.ead.authuser.mapper.UserMapper;
 import br.com.ead.authuser.model.User;
