@@ -27,8 +27,8 @@ public class UserController {
             SpecificationTemplate.UserSpec spec,
             @PageableDefault(page = 0, size = 10, sort = "id",
                             direction = Sort.Direction.ASC) Pageable pageable){
-        Page<UserResponseDTO> userResponseDTOPageage = userService.findAll(spec, pageable);
-        return ResponseEntity.ok(userResponseDTOPageage);
+        Page<UserResponseDTO> userResponseDTOPage = userService.findAll(spec, pageable);
+        return ResponseEntity.ok(userResponseDTOPage);
     }
 
     @GetMapping("/{id}")

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class SpecificationTemplate {
     @And({
-    @Spec(path="userType", spec= Equal.class),
+    @Spec(path="userRole", spec= Equal.class),
     @Spec(path = "email", spec = Like.class)
     })
     public interface UserSpec extends Specification<User> {}

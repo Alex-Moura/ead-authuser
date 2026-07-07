@@ -9,7 +9,7 @@ import java.util.Map;
 public record ApiError(
         LocalDateTime timestamp,
         int status,
-        String Error,
+        String error,
         String message,
         String path,
         Map<String, String> fields

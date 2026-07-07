@@ -11,15 +11,18 @@ import br.com.ead.authuser.model.User;
 import br.com.ead.authuser.repository.UserRepository;
 import br.com.ead.authuser.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final SecurityConfig securityConfig;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -31,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
             throw new ConflictException("Username já cadastrado");
         }
         User user = userMapper.toEntity(dto);
-        user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUserRole(UserRole.STUDENT);
         user.setUserStatus(UserStatus.ACTIVE);
 

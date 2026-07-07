@@ -43,5 +43,5 @@ public record UserRequestDTO(
         regexp = "^(http|https)://.*$",
         message = "URL da imagem deve ser válida"
     )
-    String imagemUrl
+    String imageUrl
 ) {}

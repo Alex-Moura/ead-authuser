@@ -48,7 +48,7 @@ public class User {
     private String cpf;
 
     @Column(name = "image_url")
-    private String imagemUrl;
+    private String imageUrl;
 
     @Column(name = "created_at", nullable = false)
     @Setter(AccessLevel.NONE)

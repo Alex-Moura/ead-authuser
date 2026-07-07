@@ -15,7 +15,7 @@ public record UserResponseDTO(
     UserRole userRole,
     String phoneNumber,
     String cpf,
-    String imagemUrl,
+    String imageUrl,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
