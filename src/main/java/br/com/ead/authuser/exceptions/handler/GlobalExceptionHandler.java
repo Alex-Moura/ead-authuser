@@ -19,15 +19,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<ApiError> handleConflictException(ConflictException ex, HttpServletRequest request){
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
-                HttpStatus.CONFLICT.value(),
-                HttpStatus.CONFLICT.getReasonPhrase(),
+
+        HttpStatus status = HttpStatus.CONFLICT;
+        ApiError error = buildError(
+                status,
                 ex.getMessage(),
-                request.getRequestURI(),
+                request,
                 null
         );
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+        return ResponseEntity.status(status).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -39,29 +39,28 @@ public class GlobalExceptionHandler {
             errors.put(fieldError.getField(), fieldError.getDefaultMessage());
         });
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ApiError error =  buildError(
+                status,
                 "Erro de validação",
-                request.getRequestURI(),
+                request,
                 errors
         );
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return ResponseEntity.status(status).body(error);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleResourceNotFound(ResourceNotFoundException ex,
                                                            HttpServletRequest request){
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
-                HttpStatus.NOT_FOUND.getReasonPhrase(),
+
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ApiError error = buildError(
+                status,
                 ex.getMessage(),
-                request.getRequestURI(),
+                request,
                 null
         );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        return ResponseEntity.status(status).body(error);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -79,15 +78,47 @@ public class GlobalExceptionHandler {
                 paramValue, expectedType
         );
 
-        ApiError error = new ApiError(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ApiError error = buildError(
+                status,
                 message,
-                request.getRequestURI(),
+                request,
                 null
         );
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleGenericException(
+            Exception ex,
+            HttpServletRequest request
+    ) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        ApiError error = buildError(
+                status,
+                "Erro interno inesperado",
+                request,
+                null
+        );
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+    private ApiError buildError(
+            HttpStatus status,
+            String message,
+            HttpServletRequest request,
+            Map<String, String> errors
+    ){
+        return new ApiError(
+                LocalDateTime.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                message,
+                request.getRequestURI(),
+                errors
+        );
     }
 
 }
