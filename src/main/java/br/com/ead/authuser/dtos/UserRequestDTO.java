@@ -39,9 +39,5 @@ public record UserRequestDTO(
     @CPF(message = "CPF inválido")
     String cpf,
 
-    @Pattern(
-        regexp = "^(http|https)://.*$",
-        message = "URL da imagem deve ser válida"
-    )
     String imageUrl
 ) {}
